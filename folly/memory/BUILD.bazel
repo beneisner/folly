@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "malloc",
+    srcs = ["Malloc.h"],
+    hdrs = ["Malloc.h"],
+    deps = [
+        "//folly:cportability",
+        "//folly/portability:config",
+        "//folly/lang:exception",
+        "//folly/memory/detail:malloc_impl",
+    ],
+)

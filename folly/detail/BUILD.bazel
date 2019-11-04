@@ -1,0 +1,64 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "demangle",
+    srcs = [
+        "Demangle.h",
+        "Demangle.cpp",
+    ],
+    hdrs = ["Demangle.h"],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "range_common",
+    srcs = [
+        "RangeCommon.h",
+        "RangeCommon.cpp",
+    ],
+    hdrs = ["RangeCommon.h"],
+    deps = [
+        "//folly:likely",
+        "//folly/container:sparse_byte_set",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "range_sse42",
+    srcs = [
+        "RangeSse42.h",
+        "RangeSse42.cpp",
+    ],
+    hdrs = ["RangeSse42.h"],
+    deps = [
+        ":range_common",
+        ":sse",
+        "//folly:portability",
+        "//folly:likely",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "sse",
+    srcs = [
+        "Sse.h",
+        "Sse.cpp"
+    ],
+    hdrs = ["Sse.h"],
+    deps = [
+        "//folly:portability",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "file_util_detail",
+    srcs = ["FileUtilDetail.h"],
+    hdrs = ["FileUtilDetail.h"],
+    deps = [
+        "//folly/portability:sys_uio",
+        "//folly/portability:unistd",
+    ],
+)

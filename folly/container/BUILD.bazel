@@ -1,0 +1,18 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "sparse_byte_set",
+    srcs = ["SparseByteSet.h"],
+    hdrs = ["SparseByteSet.h"],
+)
+
+cc_library(
+    name = "array",
+    srcs = ["Array.h"],
+    hdrs = ["Array.h"],
+    deps = [
+        "//folly:cportability",
+        "//folly:traits",
+        "//folly:utility",
+    ],
+)

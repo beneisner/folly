@@ -6,5 +6,5 @@ cc_test(
         "ProducerConsumerQueueTest.cpp",
     ],
     deps = ["//folly:producer_consumer_queue"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)"],
 )

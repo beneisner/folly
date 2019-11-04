@@ -1,5 +1,278 @@
 package(default_visibility = ["//visibility:public"])
 
+genrule(
+    name = "folly_config_h",
+    srcs = [
+        "//:folly_config_h_cmake",
+    ],
+    outs = [
+        "folly-config.h",
+    ],
+    cmd = "awk '{ gsub(/^#cmakedefine/, \"//cmakedefine\"); print; }' $(<) > $(@)",
+    output_to_bindir = 0,
+)
+
+cc_library(
+    name = "string",
+    srcs = [
+        "String.h",
+        "String.cpp",
+    ],
+    hdrs = ["String.h"],
+    deps = [
+        ":conv",
+        ":fb_string",
+        ":portability",
+        ":range",
+        ":scope_guard",
+        ":traits",
+        "//folly/container:array",
+    ],
+)
+
+cc_library(
+    name = "format_arg",
+    srcs = ["FormatArg.h"],
+    hdrs = ["FormatArg.h"],
+    deps = [
+        ":cportability",
+        ":conv",
+        ":likely",
+        ":portability",
+        ":range",
+        "//folly/lang:exception",
+    ],
+)
+
+cc_library(
+    name = "format",
+    srcs = [
+        "Format.h",
+        "Format.cpp",
+    ],
+    hdrs = ["Format.h"],
+    deps = [
+        ":cportability",
+        ":conv",
+        ":format_arg",
+        ":range",
+        ":string",
+        ":traits",
+        ":constexpr_math",
+        ":cpp_attributes",
+        "//folly/container:array",
+    ],
+)
+
+cc_library(
+    name = "file_util",
+    srcs = [
+        "FileUtil.h",
+        "FileUtil.cpp",
+    ],
+    hdrs = ["FileUtil.h"],
+    deps = [
+        ":portability",
+        ":range",
+        ":scope_guard",
+        "//folly/net:network_socket",
+        "//folly/portability:fcntl",
+        "//folly/portability:sys_uio",
+        "//folly/portability:unistd",
+        "//folly/detail:file_util_detail",
+        "//folly/net:net_ops",
+        "//folly/portability:sockets",
+        "//folly/portability:stdlib",
+        "//folly/portability:sys_file",
+        "//folly/portability:sys_stat",
+    ],
+)
+
+cc_library(
+    name = "cpu_id",
+    srcs = ["CpuId.h"],
+    hdrs = ["CpuId.h"],
+    deps = [":portability"],
+)
+
+cc_library(
+    name = "range",
+    srcs = ["Range.h"],
+    hdrs = ["Range.h"],
+    deps = [
+        ":portability",
+        ":cpu_id",
+        ":likely",
+        ":traits",
+        "//folly/detail:range_common",
+        "//folly/detail:range_sse42",
+        "//folly/hash:spooky_hash_v2",
+        "//folly/lang:exception",
+        "//folly/portability:constexpr",
+        "//folly/portability:string",
+    ]
+)
+
+cc_library(
+    name = "unit",
+    srcs = ["Unit.h"],
+    hdrs = ["Unit.h"],
+)
+
+cc_library(
+    name = "optional",
+    srcs = ["Optional.h"],
+    hdrs = ["Optional.h"],
+    deps = [
+        ":portability",
+        ":traits",
+        ":utility",
+        "//folly/lang:exception",
+    ],
+)
+
+cc_library(
+    name = "expected",
+    srcs = ["Expected.h"],
+    hdrs = ["Expected.h"],
+    deps = [
+        ":cportability",
+        ":cpp_attributes",
+        ":likely",
+        ":optional",
+        ":portability",
+        ":traits",
+        ":unit",
+        ":utility",
+        "//folly/lang:cold_class",
+        "//folly/lang:exception",
+    ]
+)
+
+cc_library(
+    name = "fb_string",
+    srcs = ["FBString.h"],
+    hdrs = ["FBString.h"],
+    deps = [
+        ":cportability",
+        ":cpp_attributes",
+        ":portability",
+        ":traits",
+        "//folly/hash:hash",
+        "//folly/lang:assume",
+        "//folly/lang:exception",
+        "//folly/memory:malloc",
+    ],
+)
+
+cc_library(
+    name = "demangle",
+    srcs = [
+        "Demangle.h",
+        "Demangle.cpp",
+    ],
+    hdrs = ["Demangle.h"],
+    deps = [
+        ":fb_string",
+        "//folly/detail:demangle",
+        "//folly/lang:cstring",
+        "//folly/portability:config",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "conv",
+    srcs = [
+        "Conv.h",
+        "Conv.cpp",
+    ],
+    hdrs = ["Conv.h"],
+    deps = [
+        ":demangle",
+        ":expected",
+        ":fb_string",
+        ":likely",
+        ":range",
+        ":traits",
+        ":unit",
+        ":utility",
+        "//folly/lang:exception",
+        "//folly/lang:pretty",
+        "//folly/portability:math",
+    ],
+)
+
+cc_library(
+    name = "scope_guard",
+    srcs = [
+        "ScopeGuard.h",
+        "ScopeGuard.cpp"
+    ],
+    hdrs = ["ScopeGuard.h",],
+    deps = [
+        ":portability",
+        ":preprocessor",
+        ":utility",
+        "//folly/lang:exception",
+        "//folly/lang:uncaught_exceptions",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "cpp_attributes",
+    srcs = ["CppAttributes.h"],
+    hdrs = ["CppAttributes.h"],
+)
+
+cc_library(
+    name = "folly_config",
+    srcs = [":folly_config_h"],
+    hdrs = [":folly_config_h"],
+)
+
+cc_library(
+    name = "preprocessor",
+    srcs = ["Preprocessor.h"],
+    hdrs = ["Preprocessor.h"],
+)
+
+cc_library(
+    name = "constexpr_math",
+    srcs = ["ConstexprMath.h"],
+    hdrs = ["ConstexprMath.h"],
+)
+
+cc_library(
+    name = "utility",
+    srcs = ["Utility.h"],
+    hdrs = ["Utility.h"],
+    deps = [
+        ":cportability",
+        ":portability",
+        ":traits",
+    ],
+)
+
+cc_library(
+    name = "memory",
+    srcs = ["Memory.h"],
+    hdrs = ["Memory.h"],
+    deps = [
+        "//folly:constexpr_math",
+        "//folly/functional:invoke",
+        "//folly/lang:align",
+        "//folly/lang:exception",
+        "//folly/portability:malloc",
+    ]
+)
+
+cc_library(
+    name = "likely",
+    srcs = ["Likely.h"],
+    hdrs = ["Likely.h"],
+)
 
 cc_library(
     name = "cportability",
@@ -13,7 +286,6 @@ cc_library(
     srcs = ["Portability.h"],
     hdrs = ["Portability.h"],
     deps = [":cportability"],
-
 )
 
 cc_library(

@@ -1,0 +1,30 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "network_socket",
+    srcs = ["NetworkSocket.h"],
+    hdrs = ["NetworkSocket.h"],
+    deps = [
+        "//folly/net/detail:socket_file_descriptor_map",
+        "//folly/portability:windows",
+    ],
+)
+
+cc_library(
+    name = "net_ops",
+    srcs = [
+        "NetOps.h",
+        "NetOps.cpp",
+    ],
+    hdrs = ["NetOps.h"],
+    deps = [
+        "//folly:portability",
+        ":network_socket",
+        "//folly/portability:io_vec",
+        "//folly/portability:sys_types",
+        "//folly/portability:windows",
+        "//folly/net/detail:socket_file_descriptor_map",
+        "//folly:scope_guard",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)

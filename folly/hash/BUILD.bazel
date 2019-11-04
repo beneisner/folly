@@ -1,0 +1,41 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "hash",
+    srcs = ["Hash.h"],
+    hdrs = ["Hash.h"],
+    deps = [
+        "//folly:traits",
+        "//folly:utility",
+        "//folly/functional:apply_tuple",
+        ":spooky_hash_v1",
+        ":spooky_hash_v2",
+        "//folly/lang:bits",
+    ],
+)
+
+cc_library(
+    name = "spooky_hash_v1",
+    srcs = [
+        "SpookyHashV1.h",
+        "SpookyHashV1.cpp",
+    ],
+    hdrs = ["SpookyHashV1.h"],
+    deps = ["//folly:cpp_attributes"],
+    copts = ["-I.", "--std=c++17"],
+
+)
+
+cc_library(
+    name = "spooky_hash_v2",
+    srcs = [
+        "SpookyHashV2.h",
+        "SpookyHashV2.cpp",
+    ],
+    hdrs = ["SpookyHashV2.h"],
+    deps = [
+        "//folly:portability",
+        "//folly:cpp_attributes",
+    ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
+)

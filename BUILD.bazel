@@ -1,2 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "folly_config_h_cmake",
+    srcs = ["CMake/folly-config.h.cmake"],
+)

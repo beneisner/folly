@@ -1,0 +1,14 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "malloc_impl",
+    srcs = [
+        "MallocImpl.h",
+        "MallocImpl.cpp",
+    ],
+    hdrs = ["MallocImpl.h"],
+    deps = [
+        "//folly:portability",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)

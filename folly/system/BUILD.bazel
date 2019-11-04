@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "thread_id",
+    srcs = ["ThreadId.h"],
+    hdrs = ["ThreadId.h"],
+    deps = [
+        "//folly/portability:pthread",
+        "//folly/portability:sys_syscall",
+        "//folly/portability:unistd",
+        "//folly/portability:windows",
+    ]
+)

@@ -5,5 +5,198 @@ cc_library(
     srcs = [
         "Config.h",
     ],
+    deps = [
+        "//folly:folly_config",
+    ],
     hdrs = ["Config.h"],
+    includes = ["$(BINDIR)"],
+)
+
+cc_library(
+    name = "malloc",
+    srcs = ["Malloc.h"],
+    hdrs = ["Malloc.h"],
+    deps = 
+    [
+        ":config",
+        "//folly:cportability",
+    ],
+)
+
+cc_library(
+    name = "builtins",
+    srcs = [
+        "Builtins.h",
+        "Builtins.cpp",
+    ],
+    hdrs = ["Builtins.h"],
+    deps = [
+        "//folly:portability",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "pthread",
+    srcs = [
+        "PThread.h",
+        "PThread.cpp",
+    ],
+    hdrs = ["PThread.h"],
+    deps = [
+        ":config",
+        ":windows",
+        "//folly/lang:assume",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "sys_syscall",
+    srcs = ["SysSyscall.h"],
+    hdrs = ["SysSyscall.h"],
+)
+
+cc_library(
+    name = "windows",
+    srcs = ["Windows.h"],
+    hdrs = ["Windows.h"],
+)
+
+cc_library(
+    name = "unistd",
+    srcs = [
+        "Unistd.h",
+        "Unistd.cpp",
+    ],
+    hdrs = ["Unistd.h"],
+    deps = [
+        ":sys_types",
+        ":sockets",
+        ":windows",
+        "//folly/net/detail:socket_file_descriptor_map",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "sys_types",
+    srcs = ["SysTypes.h"],
+    hdrs = ["SysTypes.h"],
+)
+
+cc_library(
+    name = "sockets",
+    srcs = [
+        "Sockets.h",
+        "Sockets.cpp",
+    ],
+    hdrs = ["Sockets.h"],
+    deps = [
+        "//folly:scope_guard",
+        "//folly/net:network_socket",
+        "//folly/net:net_ops",
+        "//folly/net/detail:socket_file_descriptor_map",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "io_vec",
+    srcs = ["IOVec.h"],
+    hdrs = ["IOVec.h"],
+)
+
+cc_library(
+    name = "math",
+    srcs = ["Math.h"],
+    hdrs = ["Math.h"],
+)
+
+cc_library(
+    name = "constexpr",
+    srcs = ["Constexpr.h"],
+    hdrs = ["Constexpr.h"],
+    deps = [
+        "//folly:cportability",
+    ]
+)
+
+cc_library(
+    name = "string",
+    srcs = [
+        "String.h",
+        "String.cpp"
+    ],
+    hdrs = ["String.h"],
+    deps = [":config"],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "fcntl",
+    srcs = ["Fcntl.h"],
+    hdrs = ["Fcntl.h"],
+    deps = [":windows"],
+)
+
+cc_library(
+    name = "sys_uio",
+    srcs = [
+        "SysUio.h",
+        "SysUio.cpp",
+    ],
+    hdrs = ["SysUio.h"],
+    deps = [
+        ":config",
+        ":io_vec",
+        ":sys_types",
+        ":sockets",
+        ":sys_file",
+        ":unistd",
+        "//folly:scope_guard",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "sys_file",
+    srcs = [
+        "SysFile.h",
+        "SysFile.cpp",
+    ],
+    hdrs = ["SysFile.h"],
+    deps = [":windows"],
+    copts = ["-I."],
+
+)
+
+cc_library(
+    name = "stdlib",
+    srcs = [
+        "Stdlib.h",
+        "Stdlib.cpp",
+    ],
+    hdrs = ["Stdlib.h"],
+    deps = [
+        ":fcntl",
+        ":sys_stat",
+        ":windows",
+    ],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "sys_stat",
+    srcs = [
+        "SysStat.h",
+        "SysStat.cpp",
+    ],
+    hdrs = ["SysStat.h"],
+    deps = [
+        ":sys_types",
+        ":windows",
+    ],
+    copts = ["-I.", "-I$(BINDIR)"],
+
 )

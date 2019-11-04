@@ -1,0 +1,77 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "align",
+    srcs = ["Align.h"],
+    hdrs = ["Align.h"],
+    deps = ["//folly:portability"],
+)
+
+cc_library(
+    name = "exception",
+    srcs = ["Exception.h"],
+    hdrs = ["Exception.h"],
+    deps = [
+        "//folly:portability",
+        "//folly:cportability",
+        "//folly:cpp_attributes",
+    ],
+)
+
+cc_library(
+    name = "uncaught_exceptions",
+    srcs = ["UncaughtExceptions.h"],
+    hdrs = ["UncaughtExceptions.h"],
+)
+
+cc_library(
+    name = "assume",
+    srcs = [
+        "Assume.h",
+        "Assume.cpp",
+    ],
+    hdrs = ["Assume.h"],
+    deps = ["//folly:portability"],
+    copts = ["-I.", "-I$(BINDIR)"],
+)
+
+cc_library(
+    name = "bits",
+    srcs = ["Bits.h"],
+    hdrs = ["Bits.h"],
+    deps = [
+        "//folly:constexpr_math",
+        "//folly:traits",
+        "//folly:utility",
+        ":assume",
+        "//folly/portability:builtins",
+    ],
+)
+
+cc_library(
+    name = "pretty",
+    srcs = ["Pretty.h"],
+    hdrs = ["Pretty.h"],
+    deps = ["//folly:portability"],
+)
+
+cc_library(
+    name = "cstring",
+    srcs = [
+        "CString.h",
+        "CString.cpp",
+    ],
+    hdrs = ["CString.h"],
+    copts = ["-I."],
+)
+
+cc_library(
+    name = "cold_class",
+    srcs = [
+        "ColdClass.h",
+        "ColdClass.cpp",
+    ],
+    hdrs = ["ColdClass.h"],
+    deps = ["//folly:cpp_attributes"],
+    copts = ["-I."],
+)
