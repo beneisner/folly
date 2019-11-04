@@ -98,7 +98,8 @@ cc_library(
         "//folly/net:net_ops",
         "//folly/net/detail:socket_file_descriptor_map",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
+
 )
 
 cc_library(
@@ -156,7 +157,7 @@ cc_library(
         ":unistd",
         "//folly:scope_guard",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
@@ -198,5 +199,15 @@ cc_library(
         ":windows",
     ],
     copts = ["-I.", "-I$(BINDIR)"],
+)
 
+cc_library(
+    name = "gtest",
+    srcs = ["GTest.h"],
+    hdrs = ["GTest.h"],
+    deps = [
+        ":unistd",
+        ":windows",
+        "//folly:portability",
+    ],
 )

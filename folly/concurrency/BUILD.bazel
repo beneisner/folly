@@ -22,4 +22,5 @@ cc_library(
         "//folly:scope_guard",
     ],
     copts = ["-I.", "-I$(BINDIR)"],
+    linkopts = ["-ldl"],
 )

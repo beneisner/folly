@@ -37,7 +37,7 @@ cc_library(
         "//folly:portability",
         "//folly:likely",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "--std=c++17"],
 )
 
 cc_library(
@@ -50,7 +50,7 @@ cc_library(
     deps = [
         "//folly:portability",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "--std=c++17"],
 )
 
 cc_library(

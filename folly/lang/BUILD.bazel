@@ -32,7 +32,7 @@ cc_library(
     ],
     hdrs = ["Assume.h"],
     deps = ["//folly:portability"],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(

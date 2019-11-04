@@ -5,6 +5,12 @@ cc_test(
     srcs = [
         "ProducerConsumerQueueTest.cpp",
     ],
-    deps = ["//folly:producer_consumer_queue"],
-    copts = ["-I.", "-I$(BINDIR)"],
+    deps = [
+        "//folly:producer_consumer_queue",
+        "//folly/portability:gtest",
+        "@com_github_google_glog//:glog",
+        "@com_github_google_googletest//:gtest",
+    ],
+    copts = ["-I.", "-I$(BINDIR)",],
+    linkopts = ["-nostartfiles"],
 )

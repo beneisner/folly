@@ -10,5 +10,5 @@ cc_library(
     deps = [
         "//folly:portability",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )

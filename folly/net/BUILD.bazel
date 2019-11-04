@@ -26,5 +26,5 @@ cc_library(
         "//folly/net/detail:socket_file_descriptor_map",
         "//folly:scope_guard",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )

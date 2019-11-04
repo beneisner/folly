@@ -1,15 +1,87 @@
 package(default_visibility = ["//visibility:public"])
 
-genrule(
-    name = "folly_config_h",
-    srcs = [
-        "//:folly_config_h_cmake",
+# genrule(
+#     name = "folly_config_h",
+#     srcs = [
+#         "//:folly_config_h_cmake",
+#     ],
+#     outs = [
+#         "folly-config.h",
+#     ],
+#     # cmd = "awk '{ gsub(/^#cmakedefine/, \"#define\"); print; }' | awk '{ gsub(/^#define01/, \"//#define01\"); print; }' $(<) > $(@)",
+#     # cmd = "awk '{ gsub(/^#cmakedefine/, \"#define\"); print; }' | awk '{ gsub(/^#cmakedefine/, \"#define\"); print; }' | $(<) > $(@)",
+#     cmd = "awk '{ gsub(/^#cmakedefine/, \"#define\"); print; }' | awk '{ gsub(/^#define01/, \"\\\\\#define01\"); print; }' $(<) > $(@)",
+
+#     output_to_bindir = 0,
+# )
+
+
+cc_library(
+    name = "folly_config",
+    srcs = ["folly-config.h"],
+    hdrs = ["folly-config.h"],
+)
+
+cc_library(
+    name = "string_inl",
+    srcs = ["String-inl.h"],
+    hdrs = ["String-inl.h"],
+    deps = [":cpp_attributes"],
+)
+
+cc_library(
+    name = "exception",
+    srcs = ["Exception.h"],
+    hdrs = ["Exception.h"],
+    deps = [
+        ":conv",
+        ":fb_string",
+        ":likely",
+        ":portability",
     ],
-    outs = [
-        "folly-config.h",
+)
+
+cc_library(
+    name = "format_traits",
+    srcs = ["FormatTraits.h"],
+    hdrs = ["FormatTraits.h"],
+)
+
+# https://docs.bazel.build/versions/master/be/c-cpp.html#cc_library
+cc_library(
+    name = "map_util",
+    srcs = ["MapUtil.h"],
+    hdrs = ["MapUtil.h"],
+    deps = [
+        ":conv",
+        ":optional",
+        "//folly/functional:invoke",
     ],
-    cmd = "awk '{ gsub(/^#cmakedefine/, \"//cmakedefine\"); print; }' $(<) > $(@)",
-    output_to_bindir = 0,
+)
+
+cc_library(
+    name = "format_inl",
+    srcs = ["Format-inl.h"],
+    hdrs = ["Format-inl.h"],
+    deps = [
+        ":exception",
+        ":format_traits",
+        ":map_util",
+        ":traits",
+        "//folly/lang:exception",
+        "//folly/portability:windows",
+    ],
+)
+
+cc_library(
+    name = "exception_string",
+    srcs = ["ExceptionString.h"],
+    hdrs = ["ExceptionString.h"],
+    deps = [
+        ":demangle",
+        ":fb_string",
+        ":portability",
+    ],
 )
 
 cc_library(
@@ -26,8 +98,11 @@ cc_library(
         ":range",
         ":scope_guard",
         ":traits",
+        ":exception_string",
+        ":string_inl",
         "//folly/container:array",
     ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
@@ -60,8 +135,10 @@ cc_library(
         ":traits",
         ":constexpr_math",
         ":cpp_attributes",
+        ":format_inl",
         "//folly/container:array",
     ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
@@ -86,6 +163,7 @@ cc_library(
         "//folly/portability:sys_file",
         "//folly/portability:sys_stat",
     ],
+    copts = ["-I.", "--std=c++17"],
 )
 
 cc_library(
@@ -178,7 +256,7 @@ cc_library(
         "//folly/lang:cstring",
         "//folly/portability:config",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
@@ -200,7 +278,9 @@ cc_library(
         "//folly/lang:exception",
         "//folly/lang:pretty",
         "//folly/portability:math",
+        "@com_github_google_double_conversion//:double-conversion",
     ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
@@ -217,19 +297,13 @@ cc_library(
         "//folly/lang:exception",
         "//folly/lang:uncaught_exceptions",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
 )
 
 cc_library(
     name = "cpp_attributes",
     srcs = ["CppAttributes.h"],
     hdrs = ["CppAttributes.h"],
-)
-
-cc_library(
-    name = "folly_config",
-    srcs = [":folly_config_h"],
-    hdrs = [":folly_config_h"],
 )
 
 cc_library(
@@ -286,6 +360,7 @@ cc_library(
     srcs = ["Portability.h"],
     hdrs = ["Portability.h"],
     deps = [":cportability"],
+    copts = ["--std=c++17"],
 )
 
 cc_library(

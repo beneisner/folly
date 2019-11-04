@@ -10,4 +10,5 @@ cc_library(
         "//folly/lang:exception",
         "//folly/memory/detail:malloc_impl",
     ],
+    copts = ["--std=c++17"],
 )
