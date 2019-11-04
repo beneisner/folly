@@ -1,0 +1,12 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "cache_locality",
+    srcs = [
+        "CacheLocality.h",
+        "CacheLocality.cpp",
+    ],
+    hdrs = ["CacheLocality.h"],
+    deps = ["//folly:indestructible"],
+    copts = ["-I."],
+)

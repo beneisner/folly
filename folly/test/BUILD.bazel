@@ -1,0 +1,10 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_test(
+    name = "producer_consumer_queue_test",
+    srcs = [
+        "ProducerConsumerQueueTest.cpp",
+    ],
+    deps = ["//folly:producer_consumer_queue"],
+    copts = ["-I."],
+)

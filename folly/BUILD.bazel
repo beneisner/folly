@@ -1,0 +1,38 @@
+package(default_visibility = ["//visibility:public"])
+
+
+cc_library(
+    name = "cportability",
+    srcs = ["CPortability.h"],
+    hdrs = ["CPortability.h"],
+    deps = ["//folly/portability:config"],
+)
+
+cc_library(
+    name = "portability",
+    srcs = ["Portability.h"],
+    hdrs = ["Portability.h"],
+    deps = [":cportability"],
+
+)
+
+cc_library(
+    name = "traits",
+    srcs = ["Traits.h"],
+    hdrs = ["Traits.h"],
+    deps = [":portability"],
+)
+
+cc_library(
+    name = "indestructible",
+    srcs = ["Indestructible.h"],
+    hdrs = ["Indestructible.h"],
+    deps = [":traits"],
+)
+
+cc_library(
+    name = "producer_consumer_queue",
+    srcs = ["ProducerConsumerQueue.h"],
+    hdrs = ["ProducerConsumerQueue.h"],
+    deps = ["//folly/concurrency:cache_locality"],
+)
