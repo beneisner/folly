@@ -23,6 +23,12 @@ cc_library(
 )
 
 cc_library(
+    name = "glog",
+    srcs = ["GLog.h"],
+    hdrs = ["GLog.h"],
+)
+
+cc_library(
     name = "string_inl",
     srcs = ["String-inl.h"],
     hdrs = ["String-inl.h"],

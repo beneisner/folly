@@ -12,5 +12,19 @@ cc_test(
         "@com_github_google_googletest//:gtest",
     ],
     copts = ["-I.", "-I$(BINDIR)",],
-    linkopts = ["-nostartfiles"],
+    linkopts = ["-nostartfiles", "-lstdc++"],
+)
+
+cc_test(
+    name = "glog_test",
+    srcs = ["GLogTest.cpp"],
+    deps = [
+        "//folly:glog",
+        "//folly/portability:gtest",
+        "@com_github_google_googletest//:gtest",
+        "@com_github_google_glog//:glog",
+    ],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++14", ],
+    linkopts = ["-nostartfiles", "-lstdc++"],
+    linkstatic = False,
 )
