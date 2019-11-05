@@ -15,6 +15,53 @@ package(default_visibility = ["//visibility:public"])
 #     output_to_bindir = 0,
 # )
 
+# https://docs.bazel.build/versions/master/be/c-cpp.html#cc_library
+cc_library(
+    name = "exception_wrapper",
+    srcs = [
+        "ExceptionWrapper.h",
+        "ExceptionWrapper-inl.h",
+        "ExceptionWrapper.cpp",
+    ],
+    hdrs = ["ExceptionWrapper.h"],
+    deps = [
+        ":cportability",
+        ":demangle",
+        ":exception_string",
+        ":fb_string",
+        ":glog",
+        ":portability",
+        ":traits",
+        ":utility",
+        "//folly/lang:assume",
+    ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
+)
+
+# https://docs.bazel.build/versions/master/be/c-cpp.html#cc_library
+cc_library(
+    name = "file",
+    srcs = ["File.h"],
+    hdrs = [
+        "File.h",
+        "File.cpp",
+    ],
+    deps = [
+        ":exception_wrapper",
+        ":expected",
+        ":portability",
+        ":range",
+        "//folly/portability:unistd",
+        ":exception",
+        ":file_util",
+        ":format",
+        ":scope_guard",
+        "//folly/portability:fcntl",
+        "//folly/portability:sys_file",
+    ],
+    copts = ["-I.", "-I$(BINDIR)", "--std=c++17"],
+)
+
 
 cc_library(
     name = "folly_config",

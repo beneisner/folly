@@ -25,3 +25,32 @@ cc_test(
     ],
     copts = ["-I.", "-I$(BINDIR)", "-std=c++17", ],
 )
+
+cc_test(
+    name = "portability_test",
+    srcs = ["PortabilityTest.cpp"],
+    deps = [
+        "//folly:portability",
+        "//folly/portability:gtest",
+        "@com_github_google_googletest//:gtest_main",
+
+    ],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17", ],
+)
+
+# Requires boost.
+# cc_test(
+#     name = "file_util_test",
+#     srcs = ["FileUtilTest.cpp"],
+#     deps = [
+#         "@com_github_google_glog//:glog",
+#         "@com_github_google_googletest//:gtest_main",
+#         "//folly:exception",
+#         "//folly:file",
+#         "//folly:range",
+#         "//folly:string",
+#         "//folly/portability:gtest",
+#         "//folly/experimental:test_util",
+#     ],
+#     copts = ["-I.", "-I$(BINDIR)", "-std=c++17", ],
+# )
