@@ -62,7 +62,7 @@ cc_library(
         "CString.cpp",
     ],
     hdrs = ["CString.h"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -73,5 +73,5 @@ cc_library(
     ],
     hdrs = ["ColdClass.h"],
     deps = ["//folly:cpp_attributes"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )

@@ -33,7 +33,7 @@ cc_library(
     deps = [
         "//folly:portability",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -48,7 +48,7 @@ cc_library(
         ":windows",
         "//folly/lang:assume",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -76,7 +76,7 @@ cc_library(
         ":windows",
         "//folly/net/detail:socket_file_descriptor_map",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -168,7 +168,7 @@ cc_library(
     ],
     hdrs = ["SysFile.h"],
     deps = [":windows"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 
 )
 
@@ -184,7 +184,7 @@ cc_library(
         ":sys_stat",
         ":windows",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -198,7 +198,7 @@ cc_library(
         ":sys_types",
         ":windows",
     ],
-    copts = ["-I.", "-I$(BINDIR)"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(

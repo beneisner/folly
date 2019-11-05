@@ -169,7 +169,7 @@ cc_library(
         "//folly/portability:sys_file",
         "//folly/portability:sys_stat",
     ],
-    copts = ["-I.", "--std=c++17"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(

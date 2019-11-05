@@ -8,5 +8,5 @@ cc_library(
     ],
     hdrs = ["SocketFileDescriptorMap.h"],
     deps = ["//folly/portability:windows"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )

@@ -22,7 +22,7 @@ cc_library(
     ],
     hdrs = ["SpookyHashV1.h"],
     deps = ["//folly:cpp_attributes"],
-    copts = ["-I.", "--std=c++17"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 
 )
 

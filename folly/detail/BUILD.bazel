@@ -7,7 +7,7 @@ cc_library(
         "Demangle.cpp",
     ],
     hdrs = ["Demangle.h"],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -21,7 +21,7 @@ cc_library(
         "//folly:likely",
         "//folly/container:sparse_byte_set",
     ],
-    copts = ["-I."],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -37,7 +37,7 @@ cc_library(
         "//folly:portability",
         "//folly:likely",
     ],
-    copts = ["-I.", "--std=c++17"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
@@ -50,7 +50,7 @@ cc_library(
     deps = [
         "//folly:portability",
     ],
-    copts = ["-I.", "--std=c++17"],
+    copts = ["-I.", "-I$(BINDIR)", "-std=c++17"],
 )
 
 cc_library(
